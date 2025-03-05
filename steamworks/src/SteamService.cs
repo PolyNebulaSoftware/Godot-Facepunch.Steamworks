@@ -62,6 +62,14 @@ public partial class SteamService : Node {
     }
 
     public override void _Process(double delta) {
-        
+        if (DisplayServer.GetName() == "headless") {
+            SteamServer.RunCallbacks();
+        } else {
+            SteamClient.RunCallbacks();
+        }
+    }
+
+    public override void _ExitTree() {
+        SteamClient.Shutdown();
     }
 }
