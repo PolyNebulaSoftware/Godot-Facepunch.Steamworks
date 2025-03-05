@@ -2,6 +2,14 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "godotPath",
+            "type": "promptString",
+            "description": "Godot executable path",
+            "default": "Z:/Godot/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe"
+        }
+    ],
     "tasks": [
         {
             "label": "build",
@@ -19,6 +27,107 @@
                 "reveal": "silent"
             },
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "export-win64",
+            "type": "shell",
+            "command": "${input:godotPath}",
+            "args": [
+                "--headless",
+                "--export-debug",
+                "Windows Desktop",
+                ".build/Win64/Build.exe"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "echo": true
+            }
+        },
+        {
+            "label": "copy-win64-dlls",
+            "type": "shell",
+            "command": "copy",
+            "args": [
+                "steamworks/sdk/*.dll",
+                ".build/Win64"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "echo": true
+            }
+        },
+        {
+            "label": "Export Windows",
+            "dependsOn": [
+                "export-win64",
+                "copy-win64-dlls"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "export-linux",
+            "type": "shell",
+            "command": "${input:godotPath}",
+            "args": [
+                "--headless",
+                "--export-debug",
+                "Linux",
+                ".build/Linux/Build.x86_64"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "echo": true
+            }
+        },
+        {
+            "label": "copy-linux-so",
+            "type": "shell",
+            "command": "copy",
+            "args": [
+                "steamworks/sdk/*.so",
+                ".build/Linux"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "echo": true
+            }
+        },
+        {
+            "label": "Export Linux",
+            "dependsOn": [
+                "export-linux",
+                "copy-linux-so"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Export All",
+            "dependsOn": [
+                "export-win64",
+                "copy-win64-dlls",
+                "export-linux",
+                "copy-linux-so"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
         }
     ]
 }

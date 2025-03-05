@@ -2,6 +2,8 @@
 .godot/
 /android/
 
+.build/
+
 /steam_api.dll
 /steam_api64.dll
 /libsteam_api.so
