@@ -7,7 +7,7 @@
             "request": "launch", 
             "preLaunchTask": "build",
             "program": "Z:/Godot/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
-            "args": ["-novid", "-console"],
+            "args": [],
             "console": "integratedTerminal", 
             "stopAtEntry": false
         }

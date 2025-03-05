@@ -8,4 +8,4 @@ Build to use as a C# Godot Project foundation with minimal effort and start usin
 2. Replace files in `steamworks/sdk` with the latest [Steamworks SDK](https://partner.steamgames.com/doc/gettingstarted) dlls.
 3. Update GameAppId in `SteamService.cs` with your own steam GameAppId.
 
-**Vscode**: To compile and run in `vscode`, make sure "program" is set to your `godot.exe` in `launch.json`.
+**Vscode**: To compile and run in `vscode`, make sure "program" is set to your `godot.exe` in `.vscode/launch.json`.
