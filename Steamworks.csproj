@@ -1,0 +1,31 @@
+<Project Sdk="Godot.NET.Sdk/4.4.0">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains('GODOT_WINDOWS'))">
+      <ItemGroup>
+        <Reference Include="Facepunch.Steamworks.Win64">
+          <HintPath>./steamworks/bin/Facepunch.Steamworks.Win64.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('GODOT_LINUXBSD'))">
+      <ItemGroup>
+        <Reference Include="Facepunch.Steamworks.Posix">
+          <HintPath>./steamworks/bin/Facepunch.Steamworks.Posix.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <Target Name="CopySdkFiles" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <SdkFiles Include="$(ProjectDir)steamworks\sdk\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SdkFiles)" DestinationFiles="@(SdkFiles->'$(ProjectDir)%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+</Project>
