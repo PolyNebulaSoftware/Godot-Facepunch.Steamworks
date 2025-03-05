@@ -1,4 +1,4 @@
-# Godot C# Implementation of Facepunch's C# Steamworks implementation.
+# Godot C# with Facepunch.Steamworks implementation.
 
 Build to use as a C# Godot Project foundation with minimal effort and start using steamworks.
 
