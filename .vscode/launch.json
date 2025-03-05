@@ -9,7 +9,8 @@
             "program": "Z:/Godot/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
             "args": [],
             "console": "integratedTerminal", 
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "postDebugTask": "clean-up-run"
         }
     ]
 }
