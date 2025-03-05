@@ -1,9 +1,9 @@
+# Godot C# with Facepunch.Steamworks implementation.
 
-`steamworks_sdk version: 161`
+Build to use as a C# Godot Project foundation with minimal effort and start using steamworks.
 
-Update and replace here
+**Setup**: Everything is bare minimum so you will need to make some changes:
 
-- `steamworks_sdk_*\redistributable_bin\win64\*`
-- `steamworks_sdk_*\redistributable_bin\linux64\*`
-- `steamworks_sdk_*\redistributable_bin\steam_api.dll`
-- `steamworks_sdk_*\redistributable_bin\steam_api.lib`
+1. Replace files in `steamworks/bin` with the latest [Facepunch.Steamworks](https://github.com/Facepunch/Facepunch.Steamworks) dlls.
+2. Replace files in `steamworks/sdk` with the latest [Steamworks SDK](https://partner.steamgames.com/doc/gettingstarted) dlls.
+3. Update GameAppId in `SteamService.cs` with your own steam GameAppId.

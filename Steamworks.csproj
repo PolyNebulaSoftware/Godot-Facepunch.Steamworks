@@ -23,7 +23,7 @@
 
   <Target Name="CopySdkFiles" BeforeTargets="BeforeBuild">
     <ItemGroup>
-      <SdkFiles Include="$(ProjectDir)steamworks\sdk\**\*.*" />
+      <SdkFiles Include="$(ProjectDir)steamworks\sdk\**\*.*" Exclude="$(ProjectDir)steamworks\sdk\**\*.md" />
     </ItemGroup>
     <Copy SourceFiles="@(SdkFiles)" DestinationFiles="@(SdkFiles->'$(ProjectDir)%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
