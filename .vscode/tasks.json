@@ -27,6 +27,20 @@
                 "reveal": "silent"
             },
             "problemMatcher": "$msCompile"
+        },{
+            "label": "makedir-builddir",
+            "type": "shell",
+            "command": "mkdir -p .build/Win64 .build/Linux",
+            "windows": {
+                "command": "mkdir -Force -Path '.build/Win64','.build/Linux'"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "never"
+            }
         },
         {
             "label": "export-win64",
@@ -45,24 +59,10 @@
             }
         },
         {
-            "label": "copy-win64-dlls",
-            "type": "shell",
-            "command": "copy",
-            "args": [
-                "steamworks/sdk/*.dll",
-                ".build/Win64"
-            ],
-            "group": "build",
-            "presentation": {
-                "reveal": "always",
-                "echo": true
-            }
-        },
-        {
             "label": "Export Windows",
             "dependsOn": [
-                "export-win64",
-                "copy-win64-dlls"
+                "makedir-builddir",
+                "export-win64"
             ],
             "dependsOrder": "sequence",
             "group": {
@@ -88,24 +88,10 @@
             }
         },
         {
-            "label": "copy-linux-so",
-            "type": "shell",
-            "command": "copy",
-            "args": [
-                "steamworks/sdk/*.so",
-                ".build/Linux"
-            ],
-            "group": "build",
-            "presentation": {
-                "reveal": "always",
-                "echo": true
-            }
-        },
-        {
             "label": "Export Linux",
             "dependsOn": [
-                "export-linux",
-                "copy-linux-so"
+                "makedir-builddir",
+                "export-linux"
             ],
             "dependsOrder": "sequence",
             "group": {
@@ -117,17 +103,15 @@
         {
             "label": "Export All",
             "dependsOn": [
+                "makedir-builddir",
                 "export-win64",
-                "copy-win64-dlls",
                 "export-linux",
-                "copy-linux-so"
             ],
             "dependsOrder": "sequence",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": []
+            }
         },{
             "label": "clean-up-run",
             "type": "shell",
@@ -141,6 +125,15 @@
             "problemMatcher": [],
             "presentation": {
                 "reveal": "never"
+            }
+        },{
+            "label": "copy-build-steamdeck",
+            "type": "shell",
+            "command": "scp -r -P 22 .\\.build\\Linux deck@steamdeck:/home/deck/Workspace/PolyNebula/Projects/Steamworks/.build/Linux",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
             }
         }
     ]

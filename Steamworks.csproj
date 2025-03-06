@@ -5,22 +5,40 @@
   </PropertyGroup>
 
   <Choose>
+
+    <!-- For Windows -->
     <When Condition="$(DefineConstants.Contains('GODOT_WINDOWS'))">
       <ItemGroup>
         <Reference Include="Facepunch.Steamworks.Win64">
           <HintPath>./steamworks/bin/Facepunch.Steamworks.Win64.dll</HintPath>
         </Reference>
+        <Content Include="./steamworks/sdk/steam_api.dll">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Link>steam_api.dll</Link>
+        </Content>
+        <Content Include="./steamworks/sdk/steam_api64.dll">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Link>steam_api64.dll</Link>
+        </Content>
       </ItemGroup>
     </When>
+
+    <!-- For Linux -->
     <When Condition="$(DefineConstants.Contains('GODOT_LINUXBSD'))">
       <ItemGroup>
         <Reference Include="Facepunch.Steamworks.Posix">
           <HintPath>./steamworks/bin/Facepunch.Steamworks.Posix.dll</HintPath>
         </Reference>
+        <Content Include="./steamworks/sdk/libsteam_api.so">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Link>libsteam_api.so</Link>
+        </Content>
       </ItemGroup>
     </When>
+
   </Choose>
 
+  <!-- For Vscode Run and Debug -->
   <Target Name="CopySdkFiles" BeforeTargets="BeforeBuild">
     <ItemGroup>
       <SdkFiles Include="$(ProjectDir)steamworks\sdk\**\*.*" Exclude="$(ProjectDir)steamworks\sdk\**\*.md" />

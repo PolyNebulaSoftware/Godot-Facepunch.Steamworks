@@ -3,9 +3,9 @@ using Steamworks;
 using System;
 
 public partial class SteamService : Node {
-    public bool IsOnline = false;
+    public static bool IsOnline { get; private set; } = false;
     public readonly string GameDescription = "Godot Game on Steam";
-    static readonly uint GameAppId = 2182890;
+    public static uint GameAppId { get; private set; } = 0;
 
     public bool ConnectAsClient() {
         if (SteamClient.IsValid) return IsOnline;
@@ -52,6 +52,23 @@ public partial class SteamService : Node {
     }
 
     public override void _Ready() {
+        var appIdTxt = FileAccess.Open("res://steamworks/steam_appid.txt", FileAccess.ModeFlags.Read);
+        if (!uint.TryParse(appIdTxt.GetLine().Trim(), out uint gameAppId)) {
+            GD.PushWarning($"Failed to read steam_appid: {appIdTxt}.");
+            return;
+        }
+        GameAppId = gameAppId;
+        
+        
+        //Create steam_appid.txt for dlls
+        string currentDir = System.IO.Directory.GetCurrentDirectory();
+        string filePath = System.IO.Path.Combine(currentDir, "steam_appid.txt");
+
+        if (!System.IO.File.Exists(filePath)) {
+            System.IO.File.WriteAllText(filePath, gameAppId.ToString());
+        }
+        
+
         if (DisplayServer.GetName() == "headless") {
             //Running as Dedicated Server
             ConnectAsServer();
