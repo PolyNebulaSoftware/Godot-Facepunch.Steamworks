@@ -27,14 +27,13 @@ Build to use as a C# Godot Project foundation with minimal effort and start usin
 - Exports using the `export_presets`'s Linux preset and outputs into `.build/Linux` folder.
 	- The csproj copies `libsteam_api.so` to the export data folder.
 
-- **steam_appid.txt** in the export directory is required for dlls to load correctly. It is also in `export_preset.cfg`'s `include_filter` setting to export non-resource file otherwise FileAccess returns null in `SteamService.cs`.
-
-- If `.build/Win64` or `.build/Linux` directories does not exit, create them manually or use task `makedir-builddir`
-	
-
 **Export All**: 
 - Performs both Export Windows & Export Linux vscode tasks.
 
+**Note**:
+- `steam_appid.txt` in the export directory is required for dlls to load correctly. It is also in `export_preset.cfg`'s `include_filter` setting to export non-resource file otherwise FileAccess returns null in `SteamService.cs`.
+- If `.build/Win64` or `.build/Linux` directories does not exit, create them manually or use task `makedir-builddir`
+	
 ---
 
 **Steamdeck**: 
