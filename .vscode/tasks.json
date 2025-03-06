@@ -135,6 +135,28 @@
             "presentation": {
                 "reveal": "always"
             }
+        },{
+            //For git fetch this project as foundation. After renaming project and files.
+            // git remote add upstream https://github.com/PolyNebulaSoftware/Godot-Facepunch.Steamworks.git
+            // git remote set-url --push upstream NO_PUSH
+            // Run this task to update steamworks to latest commit.
+            "label": "Git: Sync Upstream",
+            "type": "shell",
+            "command": "git fetch upstream && git merge upstream/main",
+            "windows": {
+                "command": "git fetch upstream; git merge upstream/main"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            }
         }
     ]
 }
