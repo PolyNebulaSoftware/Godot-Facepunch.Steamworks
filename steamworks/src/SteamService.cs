@@ -20,8 +20,9 @@ public partial class SteamService : Node {
 
         } catch (Exception e) {
             // Couldn't init for some reason (steam is closed etc)
+            IsOnline = false;
             GD.PushWarning($"Failed to connect to steam: {e.Message}");
-            OS.Alert("Steam is required to run this.", "Steam Required");
+            OS.Alert($"Failed to connect to steam: {e.Message}", "Steam Error");
 
             GetTree().Quit();
         }
@@ -35,20 +36,33 @@ public partial class SteamService : Node {
         string dirName = System.IO.Path.GetDirectoryName(OS.GetExecutablePath());
 
         var serverInit = new SteamServerInit(dirName, GameDescription) {
-            GamePort = 28015,
+            GamePort = 28100,
             Secure = true,
-            QueryPort = 28016
+            QueryPort = 28101
         };
 
         try {
-            SteamServer.Init(4000, serverInit);
+            SteamServer.Init(GameAppId, serverInit);
 
-        } catch ( Exception ) {
+            if (!SteamServer.IsValid) {
+                IsOnline = false;
+                return IsOnline;
+            }
+
+        } catch (Exception e) {
             // Couldn't init for some reason (dll errors, blocked ports)
+            IsOnline = false;
+            GD.PushWarning($"Failed to connect to steam: {e.Message}");
+            OS.Alert($"Failed to connect to steam: {e.Message}", "Steam Error");
 
+            GetTree().Quit();
         }
 
-        return serverInit.DedicatedServer;
+        return IsOnline;
+    }
+
+    public static bool IsHeadless() { // true = Rendering and window disabled, generally for server builds
+        return DisplayServer.GetName() == "headless";
     }
 
     public override void _Ready() {
@@ -69,7 +83,7 @@ public partial class SteamService : Node {
         }
         
 
-        if (DisplayServer.GetName() == "headless") {
+        if (IsHeadless()) {
             //Running as Dedicated Server
             ConnectAsServer();
         } else {
@@ -79,7 +93,7 @@ public partial class SteamService : Node {
     }
 
     public override void _Process(double delta) {
-        if (DisplayServer.GetName() == "headless") {
+        if (IsHeadless()) {
             SteamServer.RunCallbacks();
         } else {
             SteamClient.RunCallbacks();
@@ -87,6 +101,10 @@ public partial class SteamService : Node {
     }
 
     public override void _ExitTree() {
-        SteamClient.Shutdown();
+        if (IsHeadless()) {
+            SteamClient.Shutdown();
+        } else {
+            SteamServer.Shutdown();
+        }
     }
 }

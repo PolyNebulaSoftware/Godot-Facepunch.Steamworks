@@ -7,7 +7,9 @@
             "request": "launch", 
             "preLaunchTask": "build",
             "program": "Z:/Godot/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
-            "args": [],
+            "args": [
+                //"--headless" //Test for dedicated server
+            ],
             "console": "integratedTerminal", 
             "stopAtEntry": false,
             "postDebugTask": "clean-up-run"
