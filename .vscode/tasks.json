@@ -115,9 +115,9 @@
         },{
             "label": "clean-up-run",
             "type": "shell",
-            "command": "rm -f steam_api.dll steam_api64.dll steam_api.lib steam_api64.lib libsteam_api.so",
+            "command": "rm -f steam_api.dll steam_api64.dll steam_api.lib steam_api64.lib libsteam_api.so steam_appid.txt",
             "windows": {
-                "command": "Remove-Item -Force -ErrorAction SilentlyContinue -Path 'steam_api.dll','steam_api64.dll','steam_api.lib','steam_api64.lib','libsteam_api.so'"
+                "command": "Remove-Item -Force -ErrorAction SilentlyContinue -Path 'steam_api.dll','steam_api64.dll','steam_api.lib','steam_api64.lib','libsteam_api.so','steam_appid.txt'"
             },
             "options": {
                 "cwd": "${workspaceFolder}"
